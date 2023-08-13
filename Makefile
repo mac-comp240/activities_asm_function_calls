@@ -16,13 +16,16 @@ F64 =-m64
 # %_opt00.s: %.c
 # 	$(CC) $(OGFLAGS) $(CINC) -S $(F64) $< -o $*_opt00.s
 
+%.d: %.c
+	$(CC) $(CFLAGS) $(CINC) $(F64) $< -o $*
+	objdump -d $* > $@
+#	rm -f $*
 
 all: files
 
-files:	basic_files boolean_files absdiff_files
-basic_files: basic_condits.s
-boolean_files: boolean_funcs.s
-absdiff_files: absdiff.c
+files:	example1.d
 
 clean:
-	rm -f *.s *.opt00_s *.opt01_s
+	rm -f *~
+	rm -f *.s *.d
+	rm -f example1 example2
